@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('expialert_token');
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      axios.get('/api/auth/me')
+      axios.get('https://expialert-server.onrender.com/api/auth/me')
         .then(res => setBusiness(res.data))
         .catch(() => localStorage.removeItem('expialert_token'))
         .finally(() => setLoading(false));
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const res = await axios.post('/api/auth/login', { email, password });
+    const res = await axios.post('https://expialert-server.onrender.com/api/auth/login', { email, password });
     localStorage.setItem('expialert_token', res.data.token);
     axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
     setBusiness(res.data);
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (data) => {
-    const res = await axios.post('/api/auth/register', data);
+    const res = await axios.post('https://expialert-server.onrender.com/api/auth/register', data);
     localStorage.setItem('expialert_token', res.data.token);
     axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
     setBusiness(res.data);
